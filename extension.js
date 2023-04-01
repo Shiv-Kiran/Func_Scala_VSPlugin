@@ -27,8 +27,9 @@ function activate(context) {
 
 		// Display a message box to the user
 		//vscode.window.showInformationMessage("About to run callback");
-		callbackForCommand;
+		callbackForCommand();
 		vscode.window.showInformationMessage('Hello World from OOP to functional Scala!');
+		console.log("we are now done with the running");
 	});
 
 	context.subscriptions.push(disposable);
