@@ -7,15 +7,17 @@ const callbackForCommand = () => {
   const editor = vscode.window.activeTextEditor; // This is good, a global var to access the vscode process
   // const documentText = editor.getText(); // This should give you the text in the open file
 
-  // Call Scala program, give documentText as input
+  // Call Scala program, give documentText as input, throw the output into a file for now
   const cp = require('child_process')
-  cp.exec('echo Hi', (err, stdout, stderr) => {
+  let lol = cp.exec('echo Hi', (err, stdout, stderr) => {
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (err) {
         console.log('error: ' + err);
     }
   });
+
+  console.log("Hry yo callScala");
 
   /***
   const workspaceEdit = new vscode.WorkspaceEdit(); // Can use this class to perform edits, I believe that you 
@@ -34,3 +36,5 @@ const callbackForCommand = () => {
   });
   */
 };
+
+module.exports = callbackForCommand;
