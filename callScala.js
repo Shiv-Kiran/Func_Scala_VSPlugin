@@ -1,7 +1,8 @@
 const vscode = require('vscode')
 
+
 //import * as vscode from 'vscode'
-export const callbackForCommand = () => {
+const callbackForCommand = () => {
 
   const editor = vscode.window.activeTextEditor; // This is good, a global var to access the vscode process
   // const documentText = editor.getText(); // This should give you the text in the open file

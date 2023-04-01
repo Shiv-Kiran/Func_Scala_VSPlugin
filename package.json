@@ -16,7 +16,8 @@
   "contributes": {
     "commands": [{
       "command": "to-func-scala.helloWorld",
-      "title": "Hello World"
+      "title": "Hello World",
+      "category": "to-func-scala"
     }]
   },
   "scripts": {
