@@ -1,3 +1,7 @@
+A VSCode extension to refactor Scala code from OO to functional paradigm.
+Main changes to files are in extension.js and callScala.js.
+
+<!---
 # to-func-scala README
 
 This is the README for your extension "to-func-scala". After writing up a brief description, we recommend including the following sections.
@@ -63,3 +67,4 @@ You can author your README using Visual Studio Code.  Here are some useful edito
 * [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
 **Enjoy!**
+-->
