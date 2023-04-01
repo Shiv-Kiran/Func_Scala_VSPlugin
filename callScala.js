@@ -1,0 +1,35 @@
+const vscode = require('vscode')
+
+//import * as vscode from 'vscode'
+export const callbackForCommand = () => {
+
+  const editor = vscode.window.activeTextEditor; // This is good, a global var to access the vscode process
+  // const documentText = editor.getText(); // This should give you the text in the open file
+
+  // Call Scala program, give documentText as input
+  const cp = require('child_process')
+  cp.exec('echo Hi', (err, stdout, stderr) => {
+    console.log('stdout: ' + stdout);
+    console.log('stderr: ' + stderr);
+    if (err) {
+        console.log('error: ' + err);
+    }
+  });
+
+  /***
+  const workspaceEdit = new vscode.WorkspaceEdit(); // Can use this class to perform edits, I believe that you 
+ // need the range that needs to be updated (good idea to console.log and see what these objects look like, 
+ //   I suspect, (line, startCol, len)
+
+  // Make the updates
+  workspaceEdit.replace(document.uri, rangeToReplace, Refactored code);
+
+
+  vscode.workspace.applyEdit(workspaceEdit).then(() => {
+    vscode.window.showInformationMessage(
+          'refactoring done!'
+        );
+    document.save();
+  });
+  */
+};
