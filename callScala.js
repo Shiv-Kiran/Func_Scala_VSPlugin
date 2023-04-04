@@ -9,15 +9,14 @@ const callbackForCommand = () => {
   // const documentText = editor.getText(); // This should give you the text in the open file
 
   // Call Scala program, give documentText as input, throw the output into a file for now
-  const exec = require('child_process').spawn;
-  exec('ecomm.bat'); /**, (err, stdout, stderr) => {
+  const exec = require('child_process').exec;
+  exec("cd C:/Users/gnana/Desktop/IDEtool/to-func-scala && ecomm.bat", (err, stdout, stderr) => {
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (err) {
         console.log('error: ' + err);
     }
   });
-  */
 
   console.log("completed cp.exec");
 
