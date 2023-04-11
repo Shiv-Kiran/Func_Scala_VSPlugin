@@ -1,8 +1,3 @@
-cd C:/Users/gnana/Desktop/IDEtool/Namita
+cd C:/Users/gnana/Desktop/IDEtool/namrata
 cd 
-sbt
-~run
-3
-y
-
-exit
+sbt ~run
