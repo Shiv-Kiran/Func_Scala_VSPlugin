@@ -1,5 +1,7 @@
 const vscode = require('vscode')
-let text = "this is my code";
+const fs = require('fs'); // to read and write to files
+
+var text = "this is my code";
 
 //import * as vscode from 'vscode'
 const callbackForCommand = () => {
@@ -16,13 +18,19 @@ const callbackForCommand = () => {
 
   var oritext = textEditor.document.getText(textRange);
 
-  //console.log(oritext);
-
   // Call Scala program, give documentText as input, throw the output into a file for now
+
+  fs.writeFile("C:/Users/gnana/Desktop/IDEtool/namrata/src/main/scala/temp_code.scala", oritext, (err) => {
+    if (err) throw err;
+    console.log('oritext has been saved into file');
+  });
+
+
   const exec = require('child_process').exec;
-  exec(`cd C:/Users/gnana/Desktop/IDEtool/namrata && echo ${oritext} > src/main/scala/temp_code.scala && sbt ~run`,
+  exec(`cd C:/Users/gnana/Desktop/IDEtool/namrata && sbt "run src/main/scala/temp_code.scala" > answers.txt && type answers.txt`,
    (err, stdout, stderr) => {
     console.log('stdout: ' + stdout);
+    text = stdout;
     console.log('stderr: ' + stderr);
     if (err) {
         console.log('error: ' + err);
@@ -46,6 +54,7 @@ const callbackForCommand = () => {
         );
     textEditor.document.save();
   });
+  
   
 };
 
