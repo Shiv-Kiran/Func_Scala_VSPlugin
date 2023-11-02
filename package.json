@@ -10,7 +10,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:to-func-scala.refactorCode"
+    "onStartupFinished"
   ],
   "main": "./extension.js",
   "contributes": {

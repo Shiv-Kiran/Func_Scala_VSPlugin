@@ -57,3 +57,72 @@ function createChatbox() {
 -------------------------
 Time for loop Refactorings: 0.31
 Time for if-else Refactorings: 0.855
+
+
+
+Time just after Exec:  15435 time taken,  1698917251194  init time  1698917235758
+extensionHostProcess.js:131
+Time for Exec :  15437 time taken
+extensionHostProcess.js:131
+Time taken for callback:  15445
+extensionHostProcess.js:131
+0.011 time taken
+extensionHostProcess.js:131
+15.45 Total Time taken
+extensionHostProcess.js:131
+Refactorings:  109 condRefactorings:  37 loopRefactorings:  72
+
+Init Time = 1698917248594
+Time for loop Refactorings: 1.075
+Time for if-else Refactorings: 0.742
+Out Time = 1698917250411
+
+
+
+------
+
+Time just after Exec:  13216 time taken,  1698917471583  init time  1698917458367
+extensionHostProcess.js:131
+Time for Exec :  13218 time taken
+extensionHostProcess.js:131
+Time taken for callback:  13219
+extensionHostProcess.js:131
+0.006 time taken
+extensionHostProcess.js:131
+13.225 Total Time taken
+extensionHostProcess.js:131
+Refactorings:  25 condRefactorings:  9 loopRefactorings:  16
+
+Init Time = 1698917470172
+Time for loop Refactorings: 0.918
+Time for if-else Refactorings: 0.167
+Out Time = 1698917471257
+
+-------
+
+Time just after Exec:  11391 time taken,  1698917573334  init time  1698917561943
+extensionHostProcess.js:131
+Time for Exec :  11392 time taken
+extensionHostProcess.js:131
+Time taken for callback:  11395
+extensionHostProcess.js:131
+0.008 time taken
+extensionHostProcess.js:131
+11.403 Total Time taken
+extensionHostProcess.js:131
+Refactorings:  0 condRefactorings:  0 loopRefactorings:  0
+
+Init Time = 1698917571562
+Time for loop Refactorings: 1.301
+Time for if-else Refactorings: 0.002
+Out Time = 1698917572865
+
+-------
+
+
+
+
+
+
+
+

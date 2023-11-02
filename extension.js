@@ -9,20 +9,43 @@ const {featureCallback, featureDisposable, setLineDecorations} = require('./crea
  */
 function activate(context) {
 
-	
+	let isCommandRunning = false;
 	console.log('Congratulations, your extension "to-func-scala" is now active!');
 
-	let disposable = vscode.commands.registerCommand('to-func-scala.refactorCode', function () {
+	async function handleConcurency() {
+		if (isCommandRunning) {
+			vscode.window.showInformationMessage('A command is already running. Please wait.');
+			return;
+		  }
+		  try {
+			// Set the flag to indicate that the command is running
+			isCommandRunning = true;
 		
-		const start = Date.now();
+			const start = Date.now();
 		console.log("entered callback function 1");
-		callbackForCommand(start);
+		await callbackForCommand(start);
 		const end = Date.now();
 		const time = end - start;
 		console.log("Time taken for callback: ", time);
+		
 		vscode.window.showInformationMessage('Hello World from OOP to functional Scala!');
 		
-	});
+			// Command completed successfully
+			vscode.window.showInformationMessage('Command completed.');
+		  } catch (error) {
+			// Handle any errors
+			vscode.window.showErrorMessage(`Command failed: ${error.message}`);
+		  } finally {
+			// Reset the flag to indicate that the command has finished
+			isCommandRunning = false;
+		  }
+		
+		
+	}
+
+
+	let disposable = vscode.commands.registerCommand('to-func-scala.refactorCode',handleConcurency );
+
 	// setLineDecorations();
 
 
