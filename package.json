@@ -10,13 +10,13 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:to-func-scala.helloWorld"
+    "onCommand:to-func-scala.refactorCode"
   ],
   "main": "./extension.js",
   "contributes": {
     "commands": [{
-      "command": "to-func-scala.helloWorld",
-      "title": "Hello World",
+      "command": "to-func-scala.refactorCode",
+      "title": "Func Refactor",
       "category": "to-func-scala"
     }]
   },

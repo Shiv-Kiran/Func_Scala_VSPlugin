@@ -1,0 +1,7 @@
+{ "code":
+{ "code" : "while(h(xs(i))) {\\nlist += xs(i)\\ni += 1" , 
+"note" : "dropWhile" ,
+ "ref" : "xs.dropWhile(h)" }
+}
+
+
