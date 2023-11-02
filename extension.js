@@ -9,24 +9,21 @@ const {featureCallback, featureDisposable, setLineDecorations} = require('./crea
  */
 function activate(context) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
+	
 	console.log('Congratulations, your extension "to-func-scala" is now active!');
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	// featureCallback();
 
 	let disposable = vscode.commands.registerCommand('to-func-scala.refactorCode', function () {
-		// The code you place here will be executed every time your command is execute
-
-		// Display a message box to the user
-		//vscode.window.showInformationMessage("About to run callback");
-		// callbackForCommand();
+		
+		const start = Date.now();
+		console.log("entered callback function 1");
+		callbackForCommand(start);
+		const end = Date.now();
+		const time = end - start;
+		console.log("Time taken for callback: ", time);
 		vscode.window.showInformationMessage('Hello World from OOP to functional Scala!');
-		//console.log("we are now done with the running");
+		
 	});
-	setLineDecorations();
+	// setLineDecorations();
 
 
 	// context.subscriptions.push(featureDisposable);

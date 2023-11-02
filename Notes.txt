@@ -5,3 +5,55 @@
 }
 
 
+------------------
+Chatbot webview 
+
+let chatboxPanel = null;
+
+function createChatbox() {
+  if (chatboxPanel) {
+    // Chatbox already exists, don't create a new one
+    return;
+  }
+
+  // Create a Webview panel for the chatbox
+  chatboxPanel = vscode.window.createWebviewPanel(
+    'customChatbox', // Identifies the type of the webview
+    'Chatbox', // Title displayed in the panel
+    vscode.ViewColumn.One, // Editor column to show the chatbox
+    {
+      enableScripts: true // Enable JavaScript in the webview
+    }
+  );
+
+  // HTML content for the chatbox
+  chatboxPanel.webview.html = `
+    <html>
+      <body>
+        <h1>Chatbox</h1>
+        <div id="chat"></div>
+        <input id="message" type="text" placeholder="Type your message">
+        <button onclick="sendMessage()">Send</button>
+
+        <script>
+          function sendMessage() {
+            const message = document.getElementById("message").value;
+            const chat = document.getElementById("chat");
+            chat.innerHTML += '<p>You: ' + message + '</p>';
+            document.getElementById("message").value = "";
+          }
+        </script>
+      </body>
+    </html>
+  `;
+
+  // Dispose of the chatbox when the panel is closed
+  chatboxPanel.onDidDispose(() => {
+    chatboxPanel = null;
+  });
+}
+
+
+-------------------------
+Time for loop Refactorings: 0.31
+Time for if-else Refactorings: 0.855
