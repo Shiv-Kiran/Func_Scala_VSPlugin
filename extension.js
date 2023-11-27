@@ -1,7 +1,7 @@
 // Everything is written in Node.js. So you have to use require. 
 const vscode = require('vscode');
-const callbackForCommand = require('./callScala');   // using import causes errors
-const {featureCallback, featureDisposable, setLineDecorations} = require('./createFeature');
+const {callbackForCommand} = require('./callScala');   // using import causes errors
+const {featureCallback, featureDisposable, getRefactorings} = require('./createFeature');
 
 const {decorateLines, lineCodeAction} = require('./lineDecor');
 const { registerCommands } = require('./commands');
@@ -12,14 +12,17 @@ const {RefactorPanelViewProvider} = require('./refactorPanel');
 /**
  * @param {vscode.ExtensionContext} context
  */
+
+
+let globalRefactorings = []; 
 function activate(context) {
 
 	let isCommandRunning = false;
 	console.log('Congratulations, your extension "to-func-scala" is now active!');
 
-	function run() {
-		setLineDecorations();
-			decorateLines();
+	async function run() {
+		globalRefactorings = await getRefactorings();
+			decorateLines(globalRefactorings);
 	}
 
 	async function handleConcurrency() {
@@ -88,5 +91,6 @@ function deactivate() {}
 
 module.exports = {
 	activate,
-	deactivate
+	deactivate, 
+	globalRefactorings
 }

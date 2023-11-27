@@ -84,7 +84,7 @@ const featureDisposable =  vscode.languages.registerHoverProvider('scala', {
   });
 
 
-const setLineDecorations = async () => {
+const getRefactorings = async () => {
 	
 		// Create a decoration type with custom styles
 		const decorationType = vscode.window.createTextEditorDecorationType({
@@ -157,16 +157,17 @@ const setLineDecorations = async () => {
         hoverMessage.appendMarkdown('Note: Above code may contain erros do check\n');
           
         // insert range, hoverMessage into decorations
-        decorations.push({range, hoverMessage});
+        // decorations.push({range, hoverMessage});
 	
 		  // Apply the decorations to the text editor
       
     };
     console.log("Refactorings: ", Refactorings.length, "condRefactorings: ", condCount, "loopRefactorings: ", loopCount);
-    editor.setDecorations(decorationType, decorations);
+    // editor.setDecorations(decorationType, decorations);
 
 
     }
+    return Refactorings;
   }
 
 const featureCallback = () => {
@@ -201,4 +202,4 @@ const featureCallback = () => {
 }
 
 
-module.exports = {featureCallback, featureDisposable, setLineDecorations};
+module.exports = {featureCallback, featureDisposable, getRefactorings};

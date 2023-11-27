@@ -46,18 +46,22 @@ function replaceTextAtLine(editor, lineNo, text1, text2) {
   lineNo = lineNo + 1;
   const document = editor.document;
   const numberOfLines = document.lineCount;
+  // text1 = JSON.stringify(text1);
+  // text2 = JSON.stringify(text2);
 
   // Find the start position of text1
   let startPos = new vscode.Position(lineNo, 0);
   let endPos = new vscode.Position(lineNo, 0);
   console.log("replaceTextAtLine ", lineNo, text1, text2, startPos, endPos)
   let found = false;
-
-  for (let i = lineNo; i < numberOfLines; i++) {
+  console.log(text1);
+  for (let i = lineNo; i < Math.min(numberOfLines, lineNo + 2*text1.split('\n').length); i++) {
     const lineText = document.lineAt(i).text;
+    console.log("lineText " + i, lineText)
 
     if (!found) {
       // Look for the start of text1
+      console.log("Looking for matching ", lineText, text1.split('\n')[0])
       const index = lineText.indexOf(text1.split('\n')[0]);
       if (index >= 0) {
         startPos = new vscode.Position(i, index);
@@ -74,7 +78,7 @@ function replaceTextAtLine(editor, lineNo, text1, text2) {
     }
     }
   }
-  console.log(found, " ", startPos, " ", endPos)
+  console.log(found, " startPOs ", startPos, " endPos ", endPos)
   if (found) {
     // Create and apply the edit
     const range = new vscode.Range(startPos, endPos);

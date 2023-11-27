@@ -1,4 +1,5 @@
 const vscode = require('vscode');
+const {callScalaSnippet} = require('./scalaSnippet.js');
 
 
 function ChatProvider () {
@@ -43,31 +44,86 @@ function ChatProvider () {
       };
   
       webviewView.webview.html = this.getHtmlForWebview(webviewView.webview);
+
+      webviewView.webview.onDidReceiveMessage(async (message) => {
+        var output = "Hello There \n This is a test message";
+        console.log(message.command, message.text1);
+        output = await callScalaSnippet(message.text1);
+        // switch (message.command) {
+        //   case 'submit':
+        //     this.handleSubmit(message);
+        //     break;
+        // }
+        webviewView.webview.html = this.getHtmlForWebview(webviewView.webview, message.text1, output);
+      }, undefined, context.subscriptions);
+    
+      
     }
+
   
-    getHtmlForWebview(webview) {
+    getHtmlForWebview(webview,input='', output='') {
       // Use a nonce for inline scripts for security
       const nonce = getNonce();
+    //   output = JSON.stringify(output);
       
       return `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Chat Panel</title>
-        </head>
-        <body>
-        <h1> Hello There </h1>
-          <!-- Add your chat UI HTML here -->
-          <script nonce="${nonce}">
-            // Add your chat UI JavaScript here
-          </script>
-        </body>
-        </html>
-      `;
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Function Refactorings</title>
+    </head>
+    <body>
+      <div>
+      <label for="Orig Code">Enter Code For Functional Refactoring</label>
+      <textarea id="input1" rows="12" cols="50">${input}</textarea>
+
+      </div>
+      
+      <button onclick="handleSubmit()">Find Refactorings</button>
+     
+      <div>
+      <label for="Orig Code">Possible Refactoring</label>
+      <textarea id="input2" rows="25" cols="50">${output}</textarea>
+      </div>
+
+
+      <script nonce="${nonce}">
+        const vscode = acquireVsCodeApi();
+
+        function handleSubmit() {
+          const text1 = document.getElementById('input1').value;
+          vscode.postMessage({ command: 'submit', text1 });
+        }
+
+        
+      </script>
+    </body>
+    </html>
+  `;
     }
+
+    handleSubmit(message){
+        const input = message.text1;
+        callScalaSnippet(input);
+        
+
+
+
+    }
+
+
+
   }
+
+
+
+
+
+
+
+
   
   function getNonce() {
     let text = '';

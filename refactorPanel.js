@@ -61,9 +61,11 @@ class RefactorPanelViewProvider {
   acceptChange(message) {
 
     const editor = vscode.window.activeTextEditor;
+    console.log(message);
     const orig = message.text1;
     const refact = message.text2;
-    const lineNo = message.lineNo;
+    const lineNo = parseInt(message.lineNo);
+    console.log("Refactor Panel", orig, refact, lineNo)
     
     replaceTextAtLine(editor, lineNo, orig, refact);
     console.log('Accepted with text1:', message.text1, 'and text2:', message.text2);
@@ -97,7 +99,10 @@ class RefactorPanelViewProvider {
   getHtmlForWebview(webview,lineNo, text1, text2) {
     // Return the HTML content including the selected text
    
+    const encodedText1 = JSON.stringify(text1);
+    const encodedText2 = JSON.stringify(text2);
     const nonce = getNonce();
+    lineNo = parseInt(lineNo);
    
     return `
     <!DOCTYPE html>
@@ -109,12 +114,13 @@ class RefactorPanelViewProvider {
     </head>
     <body>
       <div>
-      <label for="Orig Code">Orig Code</label>
-      <p id="input1">${text1}</p>
+      <label for="Orig Code">Orig Code at ${lineNo +1}</label>
+      <textarea id="input1" rows="4" cols="50">${text1}</textarea>
+
       </div>
       <div>
         <label for="Refactored Code">Refactored Code:</label>
-        <input type="text" id="input2" value="${text2}">
+        <textarea  id="input2" rows="4" cols="50">${text2}</textarea>
       </div>
       <button onclick="handleAccept()">Accept</button>
       <button onclick="handleReject()">Reject</button>
@@ -123,7 +129,8 @@ class RefactorPanelViewProvider {
         const vscode = acquireVsCodeApi();
 
         function handleAccept() {
-          const text1 = document.getElementById('input1').value;
+          // const text1 = document.getElementById('input1').value;
+          const text1 = ${encodedText1};
           const text2 = document.getElementById('input2').value;
           const lineNo = ${lineNo};
           vscode.postMessage({ command: 'accept', lineNo,text1, text2 });

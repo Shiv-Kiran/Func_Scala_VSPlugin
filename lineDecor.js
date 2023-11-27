@@ -57,44 +57,44 @@ function showContextMenu() {
     });
   }
 
-const decorateLines = async () => {
+const decorateLines = async (refactorings) => {
 
-    vscode.window.onDidChangeTextEditorSelection(event => {
-        if (event.textEditor === vscode.window.activeTextEditor) {
+    // vscode.window.onDidChangeTextEditorSelection(event => {
+    //     if (event.textEditor === vscode.window.activeTextEditor) {
 
-          const lineNumber = event.selections[0].start.line;
-          if (lineNumber === 764) { // 0-based index, so line 765 is index 764
-            // Trigger your context menu here, or show a quick pick as a workaround
+    //       const lineNumber = event.selections[0].start.line;
+    //       if (lineNumber === 764) { // 0-based index, so line 765 is index 764
+    //         // Trigger your context menu here, or show a quick pick as a workaround
             
-            showContextMenu();
-          }
-        }
-      });
+    //         showContextMenu();
+    //       }
+    //     }
+    //   });
 
     const editor = vscode.window.activeTextEditor;
     if (editor) {
         // addDecorations(editor);
-        applyDecorations(editor, [764, 765, 766, 767, 768, 769, 770]);
-        console.log("entered decorateLines")
-        // Define the range for the line where code changes are possible (replace with your line number)
-        const lineNumber = 765; // Replace with the actual line number
-        const lineRange = editor.document.lineAt(lineNumber - 1).range;
+        applyDecorations(editor, refactorings);
+        // console.log("entered decorateLines")
+        // // Define the range for the line where code changes are possible (replace with your line number)
+        // const lineNumber = 765; // Replace with the actual line number
+        // const lineRange = editor.document.lineAt(lineNumber - 1).range;
 
-        // Create a decoration with the defined decoration type
-        const decoration = {
-            range: lineRange,
-            hoverMessage: 'Possible code changes here', // Tooltip message
-            renderOptions: {
-                after: {
-                    contentText: '⚠️', // Unicode or custom icon
-                    onClick: () => showCodeChangeOptions(lineNumber), // Callback function when icon is clicked
-                },
-            },
-        };
+        // // Create a decoration with the defined decoration type
+        // const decoration = {
+        //     range: lineRange,
+        //     hoverMessage: 'Possible code changes here', // Tooltip message
+        //     renderOptions: {
+        //         after: {
+        //             contentText: '⚠️', // Unicode or custom icon
+        //             onClick: () => showCodeChangeOptions(lineNumber), // Callback function when icon is clicked
+        //         },
+        //     },
+        // };
 
         // Apply the decoration to the editor
-        editor.setDecorations(decorationType, [decoration]);
-        editor.setDecorations(decorationType2, [decorationOptions]);
+        // editor.setDecorations(decorationType, [decoration]);
+        // editor.setDecorations(decorationType2, [decorationOptions]);
     }
 
 };
@@ -112,7 +112,7 @@ class LineSpecificCodeActionProvider {
       const actions = [];
 
       // Create a code action for each option you want to provide
-      actions.push(this.createCodeAction('Option 1 for line 765', 'option1CommandId', [document, range, range.start.line]));
+      actions.push(this.createCodeAction(`Refactor at ${range.start.line}`, 'option1CommandId', [document, range, range.start.line]));
       actions.push(this.createCodeAction('Option 2 for line 765', 'option2CommandId', [document, range, 'additionalParameter2']));
       
 
@@ -136,6 +136,7 @@ const iconPath = 'C:/Users/bshiv/Downloads/refactor.jpg';
 const lineDecorations = new Map();
 
 
+
 function applyDecorations(editor, lines) {
   const decorationType = vscode.window.createTextEditorDecorationType({
     // Define your gutter icon here
@@ -149,7 +150,8 @@ function applyDecorations(editor, lines) {
       // margin: '0 0 0 4em', // Adjust the margin as needed
       contentText: '➤', // The text or symbol you want to appear on the right
       color: 'rgba(0,255,0,0.5)' // Set your desired color and opacity
-    }
+    },
+    backgroundColor: 'rgba(0, 255, 0, 0.6)', // Red background with 20% opacity
 
   });
 
@@ -158,65 +160,48 @@ function applyDecorations(editor, lines) {
   const range = new vscode.Range(new vscode.Position(764, 0), new vscode.Position(764, 0)); // Line numbers are 0-based
 
   var arr = [];
-  lines.forEach(line => {
-    console.log(line);
+  lines.forEach(line_ => {
+    const code = line_["code"];
+    const ref = line_["ref"];
+    const note = line_["note"];
+    
+    const lineNo = parseInt(line_["lineNo"]);
+    const line = editor.document.lineAt(lineNo); 
+    const range = new vscode.Range(line.range.start, line.range.end);
 
-    const range = new vscode.Range(line, 0, line, 0);
-    lineDecorations.set(line, decorationType);
+    lineDecorations.set(lineNo, {decorationType, code});
     const hoverMessage = new vscode.MarkdownString();
-        hoverMessage.appendMarkdown(`**Functional Code Suggestion  at Line  HAHAHA**\n`);
+    hoverMessage.appendMarkdown(`**Functional Code Suggestion  at Line  ${lineNo +1} **\n`);
+
+
+    hoverMessage.isTrusted = true;
+    hoverMessage.supportHtml = true;
+
+    // hoverMessage.appendMarkdown(`[Open SideBar](command:extension.openSidebar) \n`);
+    
+    hoverMessage.appendCodeblock(code, 'Scala');
+    hoverMessage.appendMarkdown('**Replace with**\n');
+
+    hoverMessage.appendCodeblock(ref, 'javascript');
+    hoverMessage.appendMarkdown('**Note**\n');
+    hoverMessage.appendMarkdown(note);
+    
+
+    hoverMessage.appendMarkdown('Note: Above code may contain erros do check\n');
     arr.push({range, hoverMessage });
   });
   editor.setDecorations(decorationType, arr);
 }
 
-
-function addDecorations(editor,lineNumber=5) {
-    // console log current pwd 
-    const decorationType = vscode.window.createTextEditorDecorationType({
-        // Define your gutter icon here
-        gutterIconPath: vscode.Uri.file(iconPath),
-        gutterIconSize: 'cover'
-    });
-    console.log("current pwd ", process.cwd(), decorationType);
-  
-    // Assuming you want to highlight line 7
-    const range = new vscode.Range(new vscode.Position(764, 0), new vscode.Position(764, 0)); // Line numbers are 0-based
-  
-// decorate line number 2, 6, 10, 15 
-
-
-
-    // Set the decoration for the defined range
-    editor.setDecorations(decorationType, [range]);
-  }
-
 const lineCodeAction = vscode.languages.registerCodeActionsProvider(
     { scheme: 'file', language: 'scala' }, // Replace 'yourLanguageId' with the relevant language
+
+
     new LineSpecificCodeActionProvider(),
     {
       providedCodeActionKinds: [vscode.CodeActionKind.Refactor]
     }
   )
 
-  const greenDecorationType = vscode.window.createTextEditorDecorationType({
-    gutterIconPath: vscode.Uri.file(iconPath),
-    gutterIconSize: 'cover'
-  });
-
-  function addGreenGutterDecoration(editor) {
-    const decorationOptions = [];
-    for (let line = 765; line <= 770; line++) {
-      const range = new vscode.Range(line - 1, 0, line - 1, 0);
-      decorationOptions.push({ range });
-    }
-    editor.setDecorations(greenDecorationType, decorationOptions);
-  }
-
-  // Register a command that will be called when the decoration is 'clicked' (line selected)
-  let disposable = vscode.commands.registerTextEditorCommand('extension.showChanges', (editor) => {
-    // Logic to 'expand' and show changes
-    // This can be showing a diff, opening a webview, etc.
-  });
 
 module.exports = {decorateLines, lineCodeAction, lineDecorations};

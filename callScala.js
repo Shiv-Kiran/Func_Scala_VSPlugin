@@ -1,8 +1,13 @@
 const vscode = require('vscode')
 const fs = require('fs'); // to read and write to files
 const replaceCodeBlock = require('./replaceText');
-const { setLineDecorations } = require('./createFeature');
+const { getRefactorings } = require('./createFeature');
 const {decorateLines} = require('./lineDecor');
+
+
+const callScalaSnippet = (input) => {
+
+}
 
 
 const callbackForCommand = async (time) => {
@@ -63,8 +68,8 @@ const callbackForCommand = async (time) => {
       fs.writeFile(__dirname + "/test.json", text, (err) => {
         if (err) throw err;
       // decorateLines();
-      setLineDecorations();
-			decorateLines();
+      
+			decorateLines(getRefactorings());
       
       console.log((Date.now() - time)/1000.0, "time taken");
 
@@ -77,4 +82,4 @@ const callbackForCommand = async (time) => {
 
 };
 
-module.exports = callbackForCommand;
+module.exports = {callbackForCommand, callScalaSnippet};
