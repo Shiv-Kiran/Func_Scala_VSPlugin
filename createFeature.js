@@ -40,49 +40,7 @@ function getWebviewContent() {
   `;
 }
 
-let sidebarPanel;
 
-function createSidebar() {
-  if (sidebarPanel) {
-    // Sidebar already exists, don't create a new one
-    return;
-  }
-
-  // Create a Webview panel for the sidebar
-  sidebarPanel = vscode.window.createWebviewPanel(
-    'customSidebar', // Identifies the type of the webview
-    'My Sidebar', // Title displayed in the sidebar
-    vscode.ViewColumn.One, // Position the sidebar in the view
-    {
-      enableScripts: true // Enable JavaScript in the webview
-    }
-  );
-
-  // Set the HTML content for the sidebar
-  sidebarPanel.webview.html = getSidebarContent();
-
-  // Handle disposal of the sidebar
-  sidebarPanel.onDidDispose(() => {
-    sidebarPanel = undefined;
-  });
-}
-
-function getSidebarContent() {
-  // Return the HTML content for your sidebar
-  return `
-    <html>
-      <body>
-        <h1>My Sidebar</h1>
-        <p>This is the content of the sidebar.</p>
-      </body>
-    </html>
-  `;
-}
-
-// Register a command to open the sidebar
-vscode.commands.registerCommand('extension.openSidebar', () => {
-  createSidebar();
-});
 let hoverContext = {};
 const featureDisposable =  vscode.languages.registerHoverProvider('scala', {
     provideHover(document, position) {
@@ -179,16 +137,12 @@ const setLineDecorations = async () => {
 
         // Add a Button Object with onclick event
 
-        const button = new vscode.MarkdownString('[Click Hello](command:extension.sayHello?param1=value1&param2=value2)');
-        button.isTrusted = true;
-        button.supportHtml = true;
-        hoverMessage.appendMarkdown(button.value);
+        // const button = new vscode.MarkdownString('[Click Hello](command:extension.sayHello?param1=value1&param2=value2)');
+        // button.isTrusted = true;
+        // button.supportHtml = true;
+        // hoverMessage.appendMarkdown(button.value);
         hoverMessage.isTrusted = true;
         hoverMessage.supportHtml = true;
-        hoverMessage.appendMarkdown(`<h1>My Webview</h1> 
-        <button onclick=(command:extension.sayHello)> Send </button>`);
-
-        hoverMessage.appendMarkdown(`[Click Hello](command:extension.sayHello?param1=${lineNo}) \n`);
 
         // hoverMessage.appendMarkdown(`[Open SideBar](command:extension.openSidebar) \n`);
         

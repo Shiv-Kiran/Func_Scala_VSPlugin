@@ -119,6 +119,63 @@ Out Time = 1698917572865
 
 -------
 
+Time just after Exec:  20759 time taken,  1698920527810  init time  1698920507051
+extensionHostProcess.js:131
+Time for Exec :  20760 time taken
+extensionHostProcess.js:131
+Time taken for callback:  20762
+extensionHostProcess.js:131
+0.006 time taken
+extensionHostProcess.js:131
+20.766 Total Time taken
+extensionHostProcess.js:131
+Refactorings:  3288 condRefactorings:  1052 loopRefactorings:  2214
+
+Init Time = 1698920517617
+Time for loop Refactorings: 7.466
+Time for if-else Refactorings: 2.378
+Out Time = 1698920527461
+
+
+-------------
+Time for Exec :  132722 time taken
+extensionHostProcess.js:131
+Time taken for callback:  132745
+extensionHostProcess.js:131
+0.036 time taken
+extensionHostProcess.js:131
+132.769 Total Time taken
+
+Init Time = 1698920598737
+Time for loop Refactorings: 116.341
+Time for if-else Refactorings: 5.929
+Out Time = 1698920721007 
+
+100K lines 
+
+---------------
+
+Time for Exec :  86508 time taken
+extensionHostProcess.js:131
+Time taken for callback:  86513
+extensionHostProcess.js:131
+0.011 time taken
+extensionHostProcess.js:131
+86.521 Total Time taken
+
+Init Time = 1698920841239
+Time for loop Refactorings: 67.62
+Time for if-else Refactorings: 6.478
+Out Time = 1698920915337
+
+---------
+
+
+
+
+
+
+
 
 
 

@@ -2,6 +2,8 @@ const vscode = require('vscode')
 const fs = require('fs'); // to read and write to files
 const replaceCodeBlock = require('./replaceText');
 const { setLineDecorations } = require('./createFeature');
+const {decorateLines} = require('./lineDecor');
+
 
 const callbackForCommand = async (time) => {
   var initTime = time; 
@@ -29,7 +31,7 @@ const callbackForCommand = async (time) => {
     const exec = require('child_process').exec;
     return new Promise((resolve, reject) => {
 
-      exec(`cd /d "E:/Semester 7/RnD/IDEtool/namrata" && sbt -opt:inline --error "run src/main/scala/temp_code.txt" > answers.json && cat answers.json`,
+      exec(`cd /d "E:/Semester 7/RnD/IDEtool/namrata" && sbt --error "run  src/main/scala/temp_code.txt" > answers.json && cat answers.json`,
         (err, stdout, stderr) => {
           console.log("entered callback function new inside,  " + Date.now() + " diff " + (Date.now() - time) + " time taken"); 
 
@@ -60,7 +62,10 @@ const callbackForCommand = async (time) => {
       // const filePath = vscode.Uri.file(__dirname + '/test.json');
       fs.writeFile(__dirname + "/test.json", text, (err) => {
         if (err) throw err;
-      setLineDecorations(); 
+      // decorateLines();
+      setLineDecorations();
+			decorateLines();
+      
       console.log((Date.now() - time)/1000.0, "time taken");
 
       console.log((Date.now() - initTime)/1000.0, "Total Time taken");

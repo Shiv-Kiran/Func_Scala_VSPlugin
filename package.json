@@ -14,11 +14,55 @@
   ],
   "main": "./extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "chatContainer",
+          "title": "Chat",
+          "icon": "media/chat.png"
+        },
+        {
+          "id": "refactorContainer",
+          "title": "Refactor",
+          "icon": "media/refactor.jpg"
+        }
+      ]
+    },
+    "views": {
+      "chatContainer": [
+        {
+          "type": "webview",
+          "id": "chatPanel",
+          "name": "Chat Panel",
+          "visibility": "visible"
+        }
+      ],
+      "refactorContainer": [
+        {
+          "type": "webview",
+          "id": "refactorPanel",
+          "name": "Refactor Panel",
+          "visibility": "visible"
+        }
+      ]
+    },
     "commands": [{
       "command": "to-func-scala.refactorCode",
       "title": "Func Refactor",
       "category": "to-func-scala"
-    }]
+    },
+      {
+        "command": "chat.start",
+        "title": "Start Chat", 
+      "category": "to-func-scala"
+      }, 
+        {
+          "command": "extension.openSidebar",
+          "title": "Open Sidebar"
+        }
+      
+    
+  ]
   },
   "scripts": {
     "lint": "eslint .",
